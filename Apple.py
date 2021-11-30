@@ -19,12 +19,24 @@ df.iloc[11,7] = '2000'
 df['Year'] = df['Year'].astype('int32')
 source = df.groupby('Year').count()[['Company']]
 
-st.title('Apple\'s Acquisitions through the years')
+#col1, col2 = st.columns(2)
+#with col1:
+    #st.header("Apple Acquisitions through the years")
+    #st.markdown("""With the increasing pace of technological advancement, Apple seems to have increased the number of companies it acquires every year. The difference in approach is more evident when you break down Apple's history into two eras. Tim Cook and his mastery of a global suuply chains has seen the need to acquire more start ups along the way in order to remain competitive in a fiercely saturating marketing.""")
+
+st.sidebar.header("Apple Acquisitions through the years")
+st.sidebar.markdown("""Since Tim Cook was appointed CEO in 2011, Apple seems to have increased the number of companies it acquires every year. Steve Jobs was always innovation-first. In notable contrast, Tim Cook seems to have realised the increasing pace of innovation and has focused on acquiring more start ups along the way in order to remian competitive in a fiercely saturating market.""")
+
+#st.title('Apple\'s Acquisitions through the years')
 #st.dataframe(df)
+#st.markdown("""With the increasing pace of technological advancement, Apple seems to have increased the number of companies it acquires every year. The difference in approach is more evident when you break down Apple's history into two eras. Tim Cook and his mastery of a global suuply chains has seen the need to acquire more start ups along the way in order to remain competitive in a fiercely saturating marketing.""")
+
+#st.sidebar.header('Select a year in order to see derived products')
+#selected_year= st.sidebar.selectbox('Year', list(reversed(range(1950,2022))))
 
 bars = alt.Chart(source.reset_index()).mark_bar(cornerRadiusTopLeft=3,
-    cornerRadiusTopRight=3, size = 30, stroke = 'transparent').encode(
-    alt.X('Year:O'),
+    cornerRadiusTopRight=3, size = 30, stroke = 'transparent', strokeOpacity = 0).encode(
+    alt.X('Year:O', axis = alt.Axis(grid = False, labelAngle=0, labelFontSize=12, tickSize=0, labelPadding=10)),
     alt.Y('Company:Q', axis=alt.Axis(title='Number of Acquisitions', labels = False, grid=False)),
     # The highlight will be set on the result of a conditional statement
     color=alt.condition(
@@ -42,4 +54,4 @@ text = bars.mark_text(
 )
 
 
-st.altair_chart(bars + text, use_container_width = False)
+st.altair_chart(bars + text, use_container_width = True)
